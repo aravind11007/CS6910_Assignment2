@@ -122,7 +122,7 @@ class CNN_NATURALIST(pl.LightningModule):
         return [self.optimizer]
 
 ```
-* This pytorch lightning is added in an another function called trainNN
+* This pytorch lightning class is added in an another function called trainNN
 ```
 def trainNN(epochs=20,data_aug=False,lr=1e-4):
     monitor=ModelCheckpoint(monitor='val_accuracy',save_top_k=1,mode='max')
