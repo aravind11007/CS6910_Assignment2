@@ -1,4 +1,4 @@
-# CS6910_Assignment2 Part A
+# CS6910_Assignment2 Part B
 The goal of this assignment is to Fine-tuning a pre-trained model
 ## Problem Statement
 In most DL applications, instead of training a model from scratch, you would use a model pre-trained on a similar/related task/dataset. From torchvision, you can load ANY ONE model (GoogLeNet, InceptionV3, ResNet50, VGG, EfficientNetV2, VisionTransformer etc.) pre-trained on the ImageNet dataset. Given that ImageNet also contains many animal images, it stands to reason that using a model pre-trained on ImageNet maybe helpful for this task.You will load a pre-trained model and then fine-tune it using the naturalist data that you used in the previous question
@@ -120,6 +120,15 @@ class CNN_NATURALIST(pl.LightningModule):
             
     def configure_optimizers(self):
         return [self.optimizer]
+
+```
+* This pytorch lightning is added in an another function called trainNN
+```
+def trainNN(epochs=20,data_aug=False,lr=1e-4):
+    monitor=ModelCheckpoint(monitor='val_accuracy',save_top_k=1,mode='max')
+    model=CNN_NATURALIST(data_aug=data_aug,lr=lr)
+    trainer=pl.Trainer(accelerator='auto',max_epochs=epochs,callbacks=monitor)
+    trainer.fit(model,train_loader,val_loader)
 
 ```
 ## Code specifications
